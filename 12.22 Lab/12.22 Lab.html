@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dice Roller</title>
+    <style>
+    	table{
+    		border-collapse: collapse;
+    	}
+    </style>
+</head>
+<body>
+<div>
+	<img id="die1" src="die1.png" alt="blank image">
+	<img id="die2" src="die1.png" alt="blank image">
+	<img id="die3" src="die1.png" alt="blank image">
+	<img id="die4" src="die1.png" alt="blank image">
+	<img id="die5" src="die1.png" alt="blank image">
+	<img id="die6" src="die1.png" alt="blank image">
+</div>
+<div>
+	<img id="die7" src="die1.png" alt="blank image">
+	<img id="die8" src="die1.png" alt="blank image">
+	<img id="die9" src="die1.png" alt="blank image">
+	<img id="die10" src="die1.png" alt="blank image">
+	<img id="die11" src="die1.png" alt="blank image">
+	<img id="die12" src="die1.png" alt="blank image">
+</div>
+
+<form action="#">
+    <input id="rollButton" type="button" value="Roll Dice">
+</form>
+
+<script>
+    window.addEventListener("load", start, false);
+
+    var die1Amount, die2Amount, die3Amount, die4Amount, die5Amount, die6Amount;
+
+    function start() {
+        var button = document.getElementById("rollButton");
+        button.addEventListener("click", rollDice, false);
+    }
+
+    function rollDice() {
+        // Initialize counts for each die value
+        die1Amount = 0;
+        die2Amount = 0;
+        die3Amount = 0;
+        die4Amount = 0;
+        die5Amount = 0;
+        die6Amount = 0;
+
+        // Clear the existing rows in the table
+        clearTable();
+
+        setImage("die1");
+        setImage("die2");
+        setImage("die3");
+        setImage("die4");
+        setImage("die5");
+        setImage("die6");
+        setImage("die7");
+        setImage("die8");
+        setImage("die9");
+        setImage("die10");
+        setImage("die11");
+        setImage("die12");
+
+        updateFrequencyTable();
+    }
+
+    function setImage(dieId) {
+        var dieImg = document.getElementById(dieId);
+        var dieValue = Math.floor(1 + Math.random() * 6);
+        dieImg.setAttribute("src", "die" + dieValue + ".png");
+        dieImg.setAttribute("alt", "die image with " + dieValue + " spot(s)");
+
+        // Increment the count for the rolled die value
+        switch (dieValue) {
+            case 1:
+                die1Amount++;
+                break;
+            case 2:
+                die2Amount++;
+                break;
+            case 3:
+                die3Amount++;
+                break;
+            case 4:
+                die4Amount++;
+                break;
+            case 5:
+                die5Amount++;
+                break;
+            case 6:
+                die6Amount++;
+                break;
+        }
+    }
+
+    function updateFrequencyTable() {
+        var table = document.getElementById("frequencyTable");
+
+        for (var i = 1; i <= 6; i++) {
+            var row = table.insertRow(i);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            cell1.innerHTML = i; // Face value
+            cell2.innerHTML = getPercentageForDieValue(i); // Percentage
+        }
+    }
+
+    function clearTable() {
+        var table = document.getElementById("frequencyTable");
+        // Clear all rows except the header
+        while (table.rows.length > 1) {
+            table.deleteRow(1);
+        }
+    }
+
+    function getPercentageForDieValue(dieValue) {
+        switch (dieValue) {
+            case 1:
+                var pro1 = Math.round(die1Amount / 12 * 10000) / 100 ;
+                return pro1.toFixed(2);
+            case 2:
+                var pro2 = Math.round(die2Amount / 12 * 10000) / 100 ;
+                return pro2.toFixed(2);
+            case 3:
+                var pro3 = Math.round(die3Amount / 12 * 10000) / 100 ;
+                return pro3.toFixed(2);
+            case 4:
+                var pro4 = Math.round(die4Amount / 12 * 10000) / 100 ;
+                return pro4.toFixed(2);
+            case 5:
+                var pro5 = Math.round(die5Amount / 12 * 10000) / 100 ;
+                return pro5.toFixed(2);
+            case 6:
+                var pro6 = Math.round(die6Amount / 12 * 10000) / 100 ;
+                return pro6.toFixed(2);
+        }
+    }
+</script>
+
+<table id="frequencyTable" border ="1" bgcolor = "lightskyblue">
+    <tbody>
+    <tr>
+        <th bgcolor="lightblue">Face</th>
+        <th bgcolor="lightblue">Percent( % )</th>
+    </tr>
+	</tbody>
+    <!-- This table will be dynamically populated during dice rolls -->
+</table>
+
+</body>
+</html>
